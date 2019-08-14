@@ -446,7 +446,7 @@
 	
 	
 	
-// Custom changes. Sven
+// Custom changes. 
 $(document).ready(function(){
   initLGList();
   
@@ -454,6 +454,10 @@ $(document).ready(function(){
   $('#addLGToList').click(()=>{addLGToList()});
   $('#removeLGfromList').click(()=>{removeLGfromList()});
   $('#LGList').change(()=>{saveLGList()});
+  $('#externaltable').change(()=>{
+		$('.usedForCalculation').data('Externals', [$('#external1').val(),$('#external2').val(),$('#external3').val(),$('#external4').val(),$('#external5').val()]);
+		saveLGList()});
+	
 });
 
 //Coockie
@@ -468,6 +472,7 @@ function initLGList() {
 			
 			tempListItem.find('.LGListItemName option:contains("'+ i.LG +'")').prop('selected', true);
 			tempListItem.find('.LGListItemLevel').val(i.Level);
+			tempListItem.data('Externals', i.External);
 			if(i.Active){
 				tempListItem.addClass('usedForCalculation');
 			}
@@ -499,6 +504,13 @@ function initLGList() {
 			let listItem = $(this).parent();
 			listItem.addClass('usedForCalculation');
 			
+			// Set the external players based on the saved values for the LG
+			$('#external1').val(listItem.data('Externals')[0]); 
+			$('#external2').val(listItem.data('Externals')[1]);
+			$('#external3').val(listItem.data('Externals')[2]);
+			$('#external4').val(listItem.data('Externals')[3]);
+			$('#external5').val(listItem.data('Externals')[4]);
+			
 			saveLGList();
 			recalc();
 		});
@@ -516,8 +528,9 @@ function saveLGList() {
 		let LGName = $( this ).find('.LGListItemName option:selected').prop('innerText'); 
 		let LGLevel = $( this ).find('.LGListItemLevel').val();
 		let LGActive = $( this ).hasClass('usedForCalculation');
+		let LGExternal = $( this ).data('Externals');
 		
-		tempLGList.push({LG:LGName,Level:LGLevel,Active:LGActive});
+		tempLGList.push({LG:LGName,Level:LGLevel,Active:LGActive,External:LGExternal});
 	})
 	writeCookie(tempLGList);
 	recalc();
@@ -528,9 +541,9 @@ function saveLGList() {
 function addLGToList() {
 	var LGList = readCookie();
 	if(LGList !== null){
-		LGList.push({LG:"Arche",Level:1,Active:false});
+		LGList.push({LG:"Arche",Level:1,Active:false,External:[0,0,0,0,0]});
 	} else {
-		LGList = [{LG:"Arche",Level:1,Active:true}];
+		LGList = [{LG:"Arche",Level:1,Active:true,External:[0,0,0,0,0]}];
 	}
 	
 	writeCookie(LGList);
@@ -601,7 +614,8 @@ document.getElementById("setFactors85").addEventListener("click", function () {
 	
 	
 	
-	
+
+// Orginal code
 	
 // Total FP
 var ArrayFP = new Array(16);
@@ -711,9 +725,13 @@ function init()
     }
 	}());
 	
+	// set externals to 0
+	$('#external1 #external2 #external3 #external4 #external5').val("0");
+	
 	// if local storage is available load data if found
-	/*if (hasStorage)
+	if (hasStorage)
 	{
+
 		if(localStorage.getItem("storedgb") !== null)
 		{			
 			//document.getElementById("gbselect").selectedIndex = parseInt(localStorage.storedgb);
@@ -767,7 +785,7 @@ function init()
 			document.getElementById("openstation").value = parseFloat(localStorage.storedopenstation);
 		}
 	}
-	*/
+	
 	
 	recalc();
 }
@@ -1002,17 +1020,16 @@ function recalc()
 	}
 	
 	// save data if local storage is available	
-	/*if (hasStorage)
-	{
-		
-		localStorage.setItem("storedgb", document.getElementById("gbselect").selectedIndex);		
-		localStorage.setItem("storedlevel", GBlvlselect);	
+	if (hasStorage)
+	{		
+		//localStorage.setItem("storedgb", document.getElementById("gbselect").selectedIndex);		
+		//localStorage.setItem("storedlevel", GBlvlselect);	
 		for ( var i = 0; i < pfactor.length; i++)
 		{
 			localStorage.setItem(("storedpfactor"+i), pfactor[i]);	
 		}		
 		
-	}*/
+	}
 	
 	
 }
