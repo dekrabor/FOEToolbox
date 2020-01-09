@@ -423,11 +423,11 @@
 	</h1>
 	<div class="outerdiv">
 		<input id="copyUsername" placeholder="Spielername" type="text" size="8">
-		<button id="copyP1" class="active">P1</button>
-		<button id="copyP2" class="active">P2</button>
-		<button id="copyP3" class="active">P3</button>
-		<button id="copyP4" class="active">P4</button>
 		<button id="copyP5" class="active">P5</button>
+		<button id="copyP4" class="active">P4</button>
+		<button id="copyP3" class="active">P3</button>
+		<button id="copyP2" class="active">P2</button>
+		<button id="copyP1" class="active">P1</button>
 
 		<button id="copyButton">Kopieren</button></br>
 		<input id="copyOutput" type="text" value="hi" size="60">
@@ -1076,7 +1076,7 @@ function recalc()
 	for (var i = 5; i >= 0 ; i--){
 		let platz = i+1;
 		if ($('#copyP'+platz).hasClass('active')) {
-			copyOutputText += ' P' + platz + ' (' + pbonus[i] + ')';
+			copyOutputText += ' P' + platz + ' (' + pfinal[i] + ')';
 		}
 	}
 	$('#copyOutput').val(copyOutputText);
