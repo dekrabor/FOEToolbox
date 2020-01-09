@@ -735,9 +735,16 @@ $('#copyP1, #copyP2, #copyP3, #copyP4, #copyP5').click(function(){
 	recalc();
 	})
 $('#copyButton').click(function(){
-	$('#copyOutput').select()
-	document.execCommand("copy");
+	copyToClipboard('#copyOutput');
 })
+
+function copyToClipboard(element) {
+    var $temp = $("<input>");
+    $("body").append($temp);
+    $temp.val($(element).val()).select();
+    document.execCommand("copy");
+    $temp.remove();
+}
 
 var hasStorage = false;
 //var storedfactor = 0;
