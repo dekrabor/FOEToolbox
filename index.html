@@ -418,6 +418,20 @@
 		<button id="setFactors9">1,9</button>
 		<button id="setFactors85">1,85</button>
 	</div>
+	<h1>
+		Kopieren in den Gildenchat
+	</h1>
+	<div class="outerdiv">
+		<input id="copyUsername" placeholder="Spielername" type="text" size="8">
+		<button id="copyP1" class="active">P1</button>
+		<button id="copyP2" class="active">P2</button>
+		<button id="copyP3" class="active">P3</button>
+		<button id="copyP4" class="active">P4</button>
+		<button id="copyP5" class="active">P5</button>
+
+		<button id="copyButton">Kopieren</button></br>
+		<input id="copyOutput" type="text" value="hi" size="60">
+	</div>
     <h1>
         Überbieten &amp; Sichern
     </h1>
@@ -516,7 +530,7 @@ function initLGList() {
 			saveLGList();
 			recalc();
 		});
-  
+
 	} else {
 		//Create an LG list
 		addLGToList();
@@ -711,6 +725,19 @@ document.getElementById("outbidfp").addEventListener("change", calcoutbid);
 document.getElementById("ownarcfactor").addEventListener("change", calcsk);
 document.getElementById("ownarcbasefp").addEventListener("change", calcsk);
 
+//event listener copy
+$('#copyUsername').keyup(function(){
+	localStorage.setItem("LGCopyUsername", $(this).val());
+	recalc();
+})
+$('#copyP1, #copyP2, #copyP3, #copyP4, #copyP5').click(function(){
+	$(this).toggleClass('active');
+	recalc();
+	})
+$('#copyButton').click(function(){
+	$('#copyOutput').select()
+	document.execCommand("copy");
+})
 
 var hasStorage = false;
 //var storedfactor = 0;
@@ -795,6 +822,8 @@ function init()
 		}
 	}
 	
+	//Put username to copyUser
+	$('#copyUsername').val(localStorage.getItem("LGCopyUsername"));
 	
 	recalc();
 }
@@ -1040,6 +1069,17 @@ function recalc()
 		
 	}
 	
+	// Put data to copy input field
+	var copyUsername = $('#copyUsername').val()
+	var copyCurrentLG = $('.usedForCalculation .LGListItemName option:selected').text().trim();
+	var copyOutputText = copyUsername + ' ' +  copyCurrentLG;
+	for (var i = 5; i >= 0 ; i--){
+		let platz = i+1;
+		if ($('#copyP'+platz).hasClass('active')) {
+			copyOutputText += ' P' + platz + ' (' + pbonus[i] + ')';
+		}
+	}
+	$('#copyOutput').val(copyOutputText);
 	
 }
 
@@ -1365,7 +1405,7 @@ font-family: Helvetica, Arial, sans-serif;
 	text-align:right; 
 	
 }
-#gblevel , #gbfactor , #extfp , #outbidgbtotal , #secondValueLevel, #outbidbgfp , #outbidfp, #ownarcfactor, #ownarcbasefp
+#gblevel , #gbfactor, #copyOutput , #extfp , #outbidgbtotal , #secondValueLevel, #outbidbgfp , #outbidfp, #ownarcfactor, #ownarcbasefp
 {	
 	background-color: #f2f2f2 ;	
 	font-size: 1.1em;
@@ -1571,6 +1611,8 @@ a:hover
     color:#000000;
 }
 
+button:focus {outline:0;}
+
 div.hr
 {
     border-bottom-style:solid;
@@ -1600,6 +1642,15 @@ div.hr
 .usedForCalculation {
 	background: #15ff1587;
 }
+
+#copyOutput{
+	margin-top: 10px;
+}
+
+.active{
+	background-color: #15ff1587;;
+}
+
 </style>
 </body>
 </html>
