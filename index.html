@@ -453,7 +453,67 @@
         <label class="extbox">Benötigte FP:</label> <label class="extbox" id="ownarcneedfp">0</label>
     </div>
     <br>
-    <br>
+	<br>
+	<h1>
+        Grenzwert
+	</h1>
+	<div>Zeigt an ab welcher FP Summe die jeweilige Archenstufe in Relation zum Basiswert (z.B 1,9) </br> <b>immer</b> 1, 2, 3... FP zusätzlichen Gewinn bietet (auch vorher  möglich aufgrund von Rundungen)</div>
+	<table id="limittable">
+		<tbody>
+			<tr>
+				<th>
+					Basis
+				</th>
+				<th>
+					Arche
+				</th>
+				<th>
+					
+				</th>
+				<th>
+					+1
+				</th>
+				<th>
+					+2
+				</th>
+				<th>
+					+3
+				</th>
+				<th>
+					+4
+				</th>
+				<th>
+					+5
+				</th>
+			</tr>
+
+			<tr>
+				<td>
+					<input step="0.01" min="1" max="3" value="1.9" id="limitbase" type="number">
+				</td>
+				<td>
+					<input min="81" max="999" value="80" id="limitarch" type="number">
+				</td>
+				<td>
+				</td>
+				<td>
+					<div id="limitvalue1"></div>
+				</td>
+				<td>
+					<div id="limitvalue2"></div>
+				</td>
+				<td>
+					<div id="limitvalue3"></div>
+				</td>
+				<td>
+					<div id="limitvalue4"></div>
+				</td>
+				<td>
+					<div id="limitvalue5"></div>
+				</td>
+			</tr>
+		</tbody>
+	</table>
 	<script>
 	'use strict'
 	
@@ -614,6 +674,75 @@ document.getElementById("setFactors85").addEventListener("click", function () {
 	document.getElementById("p5factor").value = 1.85;
 	recalc();
 });
+
+
+// Limittable (Grenzwert)
+document.getElementById("limitbase").addEventListener("change", limitCalc);
+document.getElementById("limitarch").addEventListener("change", limitCalc);
+
+function limitCalc() {
+	let limitBase = $('#limitbase').val();
+	let limitArc = $('#limitarch').val();
+	if(limitArc < 81) {return;}
+	// Errechne aus Stufe der Arche deren Bonus (ab Stufe 80)
+	let limitArcBase = 1.9 + (0.001 * (limitArc - 80));
+
+	let limitresults = [];
+
+	let FPValue = 1;
+	let iterations = 0;
+	let successCount = 0;
+	while (iterations <= 7) {
+		// Berechne den Bonus mit Basiswert (limitBase) und höherer Arche (limitArcBase)
+		let FPBase = Math.round(FPValue * limitBase);
+		let FPArc = Math.round(FPValue * limitArcBase);
+
+		// Falls die höhere Arche mehr FP generiert (limitresults.length um nach 1, 2, 3... zu suchen)
+		if( FPArc > (FPBase + limitresults.length)) {
+			successCount++;
+
+			// Suche 10 Fälle in Folge bei denen FPArc höher ist (um Ausreisser durch Rundung zu eliminieren)
+			if (successCount > 10) {
+
+				// Fuege Ergebnis der Liste hinzu. Ab erstem Ergebnis wird konstant 1 FP mehr erzeugt, ab 2. 2 etc.
+				limitresults.push(FPValue - 10);
+				iterations++;
+			}
+		} else { 
+			// Ist einmalig der FPArc Wert nicht grösser. Suchen wir weiter
+			successCount = 0
+		}
+
+		// Die FP Menge wird in diesem Prozess langsam erhöht
+		FPValue++;
+
+	}
+
+	$('#limitvalue1').text(limitresults[0]);
+	$('#limitvalue2').text(limitresults[1]);
+	$('#limitvalue3').text(limitresults[2]);
+	$('#limitvalue4').text(limitresults[3]);
+	$('#limitvalue5').text(limitresults[4]);
+	$('#limitvalue6').text(limitresults[5]);
+	$('#limitvalue7').text(limitresults[6]);
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 // Ende Custom changes
 	
@@ -836,6 +965,8 @@ function init()
 	//Put username to copyUser
 	$('#copyUsername').val(localStorage.getItem("LGCopyUsername"));
 	
+	limitCalc();
+
 	recalc();
 }
 
@@ -1391,7 +1522,6 @@ font-family: Helvetica, Arial, sans-serif;
 	color: #000000 ;	
 	font-size: 1.1em; 	
 		
-	
 }
 #gbselect , #gbselect2, #secondValueLG
 { 
@@ -1414,9 +1544,23 @@ font-family: Helvetica, Arial, sans-serif;
 	font-size: 1.1em; 
 	background-color: #f2f2f2 ;	
 	text-align:right; 
-	
 }
-#gblevel , #gbfactor, #copyOutput , #extfp , #outbidgbtotal , #secondValueLevel, #outbidbgfp , #outbidfp, #ownarcfactor, #ownarcbasefp
+#limittable {
+	margin: 20px;
+}
+#limittable input {
+	width: 60px;
+}
+#limittable td { 
+	min-width: 40px;
+}
+#limittable td:nth-child(3) { 
+	min-width: 60px;
+}
+
+
+
+#gblevel , #gbfactor, #copyOutput , #extfp , #outbidgbtotal , #secondValueLevel, #outbidbgfp , #outbidfp, #ownarcfactor, #ownarcbasefp, #limittable
 {	
 	background-color: #f2f2f2 ;	
 	font-size: 1.1em;
