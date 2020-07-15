@@ -416,6 +416,7 @@
         </table>
     </div>
 	<div class="setFactorsContainer">
+		<button id="setFactors93">1,93</button>
 		<button id="setFactors9">1,9</button>
 		<button id="setFactors85">1,85</button>
 	</div>
@@ -747,7 +748,7 @@ function deleteCookie() {
   document.cookie = [name, '=; expires=Thu, 01-Jan-1970 00:00:01 GMT; path=/;'].join('');
 }
 
-// Set to 1,85 or 1,9
+// Set to 1,85, 1,93 or 1,9
 document.getElementById("setFactors9").addEventListener("click", function () {
 	document.getElementById("p1factor").value = 1.9;
 	document.getElementById("p2factor").value = 1.9;
@@ -763,6 +764,15 @@ document.getElementById("setFactors85").addEventListener("click", function () {
 	document.getElementById("p3factor").value = 1.85;
 	document.getElementById("p4factor").value = 1.85;
 	document.getElementById("p5factor").value = 1.85;
+	recalc();
+});
+
+document.getElementById("setFactors93").addEventListener("click", function () {
+	document.getElementById("p1factor").value = 1.93;
+	document.getElementById("p2factor").value = 1.93;
+	document.getElementById("p3factor").value = 1.93;
+	document.getElementById("p4factor").value = 1.93;
+	document.getElementById("p5factor").value = 1.93;
 	recalc();
 });
 
@@ -1657,7 +1667,7 @@ font-family: Helvetica, Arial, sans-serif;
 	text-align:right; 
 }
 #limittable {
-	margin: 20px;
+	margin: 20px auto;
 }
 #limittable input {
 	width: 60px;
@@ -1874,7 +1884,7 @@ h3
 }
 
 .setFactorsContainer {
-	margin: 10px 0 0 0;
+	margin: 10px auto 0 auto;
 }
 
 a:link,
