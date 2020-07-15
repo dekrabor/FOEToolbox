@@ -419,20 +419,6 @@
 		<button id="setFactors9">1,9</button>
 		<button id="setFactors85">1,85</button>
 	</div>
-	<h1>
-		Kopieren in den Gildenchat
-	</h1>
-	<div class="outerdiv">
-		<input id="copyUsername" placeholder="Spielername" type="text" size="8">
-		<button id="copyP5" class="active">P5</button>
-		<button id="copyP4" class="active">P4</button>
-		<button id="copyP3" class="active">P3</button>
-		<button id="copyP2" class="active">P2</button>
-		<button id="copyP1" class="active">P1</button>
-
-		<button id="copyButton">Kopieren</button></br>
-		<input id="copyOutput" type="text" value="hi" size="60">
-	</div>
     <h1>
         Überbieten &amp; Sichern
     </h1>
@@ -453,22 +439,23 @@
         <label class="extbox">Benötigte FP:</label> <label class="extbox" id="ownarcneedfp">0</label>
     </div>
     <br>
-	<br>
 	<h1>
         Grenzwert
 	</h1>
 	<div>Zeigt an ab welcher FP Summe die jeweilige Archenstufe in Relation zum Basiswert (z.B 1,9) </br> <b>immer</b> 1, 2, 3... FP zusätzlichen Gewinn bietet (auch vorher  möglich aufgrund von Rundungen)</div>
+		
+	<div>
+		Basis <input step="0.01" min="1" max="3" value="1.9" id="limitbase" type="number"> </br>
+		Arche <input min="81" max="999" value="81" id="limitarc" type="number"></div>
+
+
+		
+
 	<table id="limittable">
 		<tbody>
 			<tr>
 				<th>
-					Basis
-				</th>
-				<th>
-					Arche
-				</th>
-				<th>
-					
+					Faktor
 				</th>
 				<th>
 					+1
@@ -485,16 +472,17 @@
 				<th>
 					+5
 				</th>
+				<th>
+					+6
+				</th>
+				<th>
+					+7
+				</th>
 			</tr>
 
 			<tr>
 				<td>
-					<input step="0.01" min="1" max="3" value="1.9" id="limitbase" type="number">
-				</td>
-				<td>
-					<input min="81" max="999" value="80" id="limitarch" type="number">
-				</td>
-				<td>
+					1
 				</td>
 				<td>
 					<div id="limitvalue1"></div>
@@ -511,9 +499,81 @@
 				<td>
 					<div id="limitvalue5"></div>
 				</td>
+				<td>
+					<div id="limitvalue6"></div>
+				</td>
+				<td>
+					<div id="limitvalue7"></div>
+				</td>
+			</tr>
+			<tr>
+				<td>
+					<div id="limitvaluebase">1,9</div>
+				</td>
+				<td>
+					<div id="limitvaluebase1"></div>
+				</td>
+				<td>
+					<div id="limitvaluebase2"></div>
+				</td>
+				<td>
+					<div id="limitvaluebase3"></div>
+				</td>
+				<td>
+					<div id="limitvaluebase4"></div>
+				</td>
+				<td>
+					<div id="limitvaluebase5"></div>
+				</td>
+				<td>
+					<div id="limitvaluebase6"></div>
+				</td>
+				<td>
+					<div id="limitvaluebase7"></div>
+				</td>
+			</tr>
+			<tr>
+				<td>
+					<div id="limitvaluearc">1,9</div>
+				</td>
+				<td>
+					<div id="limitvaluearc1"></div>
+				</td>
+				<td>
+					<div id="limitvaluearc2"></div>
+				</td>
+				<td>
+					<div id="limitvaluearc3"></div>
+				</td>
+				<td>
+					<div id="limitvaluearc4"></div>
+				</td>
+				<td>
+					<div id="limitvaluearc5"></div>
+				</td>
+				<td>
+					<div id="limitvaluearc6"></div>
+				</td>
+				<td>
+					<div id="limitvaluearc7"></div>
+				</td>
 			</tr>
 		</tbody>
 	</table>
+	<h1>
+		Kopieren in den Gildenchat
+	</h1>
+	<div class="outerdiv">
+		<input id="copyUsername" placeholder="Spielername" type="text" size="8">
+		<button id="copyP5" class="active">P5</button>
+		<button id="copyP4" class="active">P4</button>
+		<button id="copyP3" class="active">P3</button>
+		<button id="copyP2" class="active">P2</button>
+		<button id="copyP1" class="active">P1</button>
+
+		<button id="copyButton">Kopieren</button></br>
+		<input id="copyOutput" type="text" value="hi" size="60">
+	</div>
 	<script>
 	'use strict'
 	
@@ -678,11 +738,15 @@ document.getElementById("setFactors85").addEventListener("click", function () {
 
 // Limittable (Grenzwert)
 document.getElementById("limitbase").addEventListener("change", limitCalc);
-document.getElementById("limitarch").addEventListener("change", limitCalc);
+document.getElementById("limitarc").addEventListener("change", limitCalc);
 
 function limitCalc() {
 	let limitBase = $('#limitbase').val();
-	let limitArc = $('#limitarch').val();
+	localStorage.setItem("limitbase", limitBase);
+
+
+	let limitArc = $('#limitarc').val();
+	localStorage.setItem("limitarc", limitArc);
 	if(limitArc < 81) {return;}
 	// Errechne aus Stufe der Arche deren Bonus (ab Stufe 80)
 	let limitArcBase = 1.9 + (0.001 * (limitArc - 80));
@@ -704,9 +768,15 @@ function limitCalc() {
 			// Suche 10 Fälle in Folge bei denen FPArc höher ist (um Ausreisser durch Rundung zu eliminieren)
 			if (successCount > 10) {
 
-				// Fuege Ergebnis der Liste hinzu. Ab erstem Ergebnis wird konstant 1 FP mehr erzeugt, ab 2. 2 etc.
+				// Füge Ergebnis der Liste hinzu. Ab erstem Ergebnis wird konstant 1 FP mehr erzeugt, ab 2. 2 etc.
 				limitresults.push(FPValue - 10);
 				iterations++;
+
+				// Füge Ergbebnisse in Tabelle ein
+				$('#limitvalue' + iterations).text(FPValue - 10);
+				$('#limitvaluebase' + iterations).text(FPBase - 10);
+				$('#limitvaluearc' + iterations).text(FPArc - 10);
+
 			}
 		} else { 
 			// Ist einmalig der FPArc Wert nicht grösser. Suchen wir weiter
@@ -718,13 +788,8 @@ function limitCalc() {
 
 	}
 
-	$('#limitvalue1').text(limitresults[0]);
-	$('#limitvalue2').text(limitresults[1]);
-	$('#limitvalue3').text(limitresults[2]);
-	$('#limitvalue4').text(limitresults[3]);
-	$('#limitvalue5').text(limitresults[4]);
-	$('#limitvalue6').text(limitresults[5]);
-	$('#limitvalue7').text(limitresults[6]);
+	$('#limitvaluebase').text(limitBase);
+	$('#limitvaluearc').text(limitArcBase.toFixed(3));
 
 }
 
@@ -956,9 +1021,13 @@ function init()
 		{			
 			document.getElementById("members1").value = parseFloat(localStorage.storedmembers1);
 		}
-        if(localStorage.getItem("openstation") !== null)
+        if(localStorage.getItem("limitbase") !== null)
 		{			
-			document.getElementById("openstation").value = parseFloat(localStorage.storedopenstation);
+			document.getElementById("limitbase").value = localStorage.limitbase;
+		}
+		if(localStorage.getItem("limitarc") !== null)
+		{			
+			document.getElementById("limitarc").value =localStorage.limitarc;
 		}
 	}
 	
@@ -1477,7 +1546,7 @@ text-align: center;
 	 color: red;
  }
  
-#arcboosttable, #externaltable
+#arcboosttable, #externaltable, #limittable
 { 
 	font-size: 1.1em;
 font-family: Helvetica, Arial, sans-serif; 
@@ -1554,13 +1623,13 @@ font-family: Helvetica, Arial, sans-serif;
 #limittable td { 
 	min-width: 40px;
 }
-#limittable td:nth-child(3) { 
-	min-width: 60px;
+#limitbase {
+	margin: 10px auto;
 }
 
 
 
-#gblevel , #gbfactor, #copyOutput , #extfp , #outbidgbtotal , #secondValueLevel, #outbidbgfp , #outbidfp, #ownarcfactor, #ownarcbasefp, #limittable
+#gblevel , #gbfactor, #copyOutput , #extfp , #outbidgbtotal , #secondValueLevel, #outbidbgfp , #outbidfp, #ownarcfactor, #ownarcbasefp, #limitbase, #limitarc
 {	
 	background-color: #f2f2f2 ;	
 	font-size: 1.1em;
