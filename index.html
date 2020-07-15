@@ -449,14 +449,17 @@
 			<tr>
 				<th> <label class="extbox">Arche Faktor</label></th>
 				<th><label class="extbox">Mäzen</label></th>
+				<th><label class="extbox">Gewinn</label></th>
 			</tr>
 			<tr>
-				<td> <input step="0.01" min="1" max="3" value="1.8" id="ownarcfactor" type="number"></td>
+				<td> <input step="0.01" min="1" max="3" value="1.9" id="ownarcfactor" type="number"></td>
 				<td><input min="0" max="99999" value="0" id="ownarcbasefp" type="number"></td>
+				<td><label class="extbox" id="ownarcneedfp">0</label></td>
 			</tr>
 			<tr>
-				<td><label class="extbox">Benötigte FP</label> </td>
-				<td colspan="2"><label class="extbox" id="ownarcneedfp">0</label></td>
+				<td> <input step="0.01" min="1" max="3" value="1.9" id="ownarcfactor2" type="number"></td>
+				<td></td>
+				<td colspan="2"><label class="extbox" id="ownarcneedfp2">0</label></td>
 			</tr>
 		</tbody>
 	</table>
@@ -943,6 +946,7 @@ document.getElementById("outbidfp").addEventListener("change", calcoutbid);
 
 //event listener calcsk
 document.getElementById("ownarcfactor").addEventListener("change", calcsk);
+document.getElementById("ownarcfactor2").addEventListener("change", calcsk);
 document.getElementById("ownarcbasefp").addEventListener("change", calcsk);
 
 //event listener copy
@@ -1026,6 +1030,10 @@ function init()
 		if(localStorage.getItem("storedownarcfactor") !== null)
 		{			
 			document.getElementById("ownarcfactor").value = parseFloat(localStorage.storedownarcfactor);
+		}
+		if(localStorage.getItem("storedownarcfactor2") !== null)
+		{			
+			document.getElementById("ownarcfactor2").value = parseFloat(localStorage.storedownarcfactor2);
 		}
         if(localStorage.getItem("storedmembers") !== null)
 		{			
@@ -1510,12 +1518,15 @@ function calcsk()
 	}	
 	
 	var ownarcfactor = parseFloat(document.getElementById("ownarcfactor").value);
+	var ownarcfactor2 = parseFloat(document.getElementById("ownarcfactor2").value);
 	var ownarcbasefp = parseInt(document.getElementById("ownarcbasefp").value);
 	document.getElementById("ownarcneedfp").innerHTML = ( Math.round(ownarcfactor*ownarcbasefp));
+	document.getElementById("ownarcneedfp2").innerHTML = ( Math.round(ownarcfactor2*ownarcbasefp));
 	if (hasStorage)
 	{
 		
 		localStorage.setItem("storedownarcfactor", ownarcfactor);	
+		localStorage.setItem("storedownarcfactor2", ownarcfactor2);
 	}
 }
 
@@ -1651,7 +1662,7 @@ font-family: Helvetica, Arial, sans-serif;
 
 
 
-#gblevel , #gbfactor, #copyOutput , #extfp , #outbidgbtotal , #secondValueLevel, #outbidbgfp , #outbidfp, #ownarcfactor, #ownarcbasefp, #limitbase, #limitarc
+#gblevel , #gbfactor, #copyOutput , #extfp , #outbidgbtotal , #secondValueLevel, #outbidbgfp , #outbidfp, #ownarcfactor, #ownarcfactor2, #ownarcbasefp, #limitbase, #limitarc
 {	
 	background-color: #f2f2f2 ;	
 	font-size: 1.1em;
