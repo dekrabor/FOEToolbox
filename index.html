@@ -422,22 +422,44 @@
     <h1>
         Überbieten &amp; Sichern
     </h1>
-
-    <div class="outerdiv">
-        <label class="extbox">FP-∑ Level:</label> <input min="0" max="99999" value="0" id="outbidgbtotal" type="number"> <label class="extbox">Fp Stand:</label> <input min="0" max="99999" value="0" id="outbidbgfp" type="number"><br>
-        <br>
-        <label class="extbox">Zu überbieten:</label> <input min="0" max="99999" value="0" id="outbidfp" type="number"> <label class="extbox">Benötigte FP:</label> <label class="extbox" id="outbidneedfp">0</label>
-    </div>
+	<table id="outbidtable">
+		<tbody>
+			<tr>
+				<th><label class="extbox">FP-∑ Level</label></th>
+				<th><label class="extbox">Fp Stand</label></th>
+				<th><label class="extbox">Zu überbieten</label></th>
+			</tr>
+			<tr>
+				<td><input min="0" max="99999" value="0" id="outbidgbtotal" type="number"></td>
+				<td><input min="0" max="99999" value="0" id="outbidbgfp" type="number"></td>
+				<td><input min="0" max="99999" value="0" id="outbidfp" type="number"></td>
+			</tr>
+			<tr>
+				<td><label class="extbox">Benötigte FP</label> </td>
+				<td colspan="2"><label class="extbox" id="outbidneedfp">0</label></td>
+			</tr>
+		</tbody>
+	</table>
 
     <h1>
         Invest Rechner
-    </h1>
-
-    <div class="outerdiv">
-        <label class="extbox">Arche Faktor:</label> <input step="0.01" min="1" max="3" value="1.8" id="ownarcfactor" type="number"> <label class="extbox">Mäzen:</label> <input min="0" max="99999" value="0" id="ownarcbasefp" type="number"><br>
-        <br>
-        <label class="extbox">Benötigte FP:</label> <label class="extbox" id="ownarcneedfp">0</label>
-    </div>
+	</h1>
+	<table id="ownarctable">
+		<tbody>
+			<tr>
+				<th> <label class="extbox">Arche Faktor</label></th>
+				<th><label class="extbox">Mäzen</label></th>
+			</tr>
+			<tr>
+				<td> <input step="0.01" min="1" max="3" value="1.8" id="ownarcfactor" type="number"></td>
+				<td><input min="0" max="99999" value="0" id="ownarcbasefp" type="number"></td>
+			</tr>
+			<tr>
+				<td><label class="extbox">Benötigte FP</label> </td>
+				<td colspan="2"><label class="extbox" id="ownarcneedfp">0</label></td>
+			</tr>
+		</tbody>
+	</table>
     <br>
 	<h1>
         Grenzwert
@@ -1546,7 +1568,7 @@ text-align: center;
 	 color: red;
  }
  
-#arcboosttable, #externaltable, #limittable
+#arcboosttable, #externaltable, #limittable,  #outbidtable, #ownarctable
 { 
 	font-size: 1.1em;
 font-family: Helvetica, Arial, sans-serif; 
@@ -1633,6 +1655,7 @@ font-family: Helvetica, Arial, sans-serif;
 {	
 	background-color: #f2f2f2 ;	
 	font-size: 1.1em;
+	text-align: center;
 font-family: Helvetica, Arial, sans-serif; 		
 	
 }
