@@ -461,6 +461,11 @@
 				<td></td>
 				<td colspan="2"><label class="extbox" id="ownarcneedfp2">0</label></td>
 			</tr>
+			<tr>
+				<td></td>
+				<td></td>
+				<td><label class="extbox" id="ownarcneedfpdiff">0</label></td>
+			</tr>
 		</tbody>
 	</table>
     <br>
@@ -1522,6 +1527,8 @@ function calcsk()
 	var ownarcbasefp = parseInt(document.getElementById("ownarcbasefp").value);
 	document.getElementById("ownarcneedfp").innerHTML = ( Math.round(ownarcfactor*ownarcbasefp));
 	document.getElementById("ownarcneedfp2").innerHTML = ( Math.round(ownarcfactor2*ownarcbasefp));
+	document.getElementById("ownarcneedfpdiff").innerHTML = ( Math.round(ownarcfactor2*ownarcbasefp) - Math.round(ownarcfactor*ownarcbasefp));
+	
 	if (hasStorage)
 	{
 		
@@ -1620,6 +1627,7 @@ font-family: Helvetica, Arial, sans-serif;
 {
 	margin : 0.2em;
 	padding :0;
+	width:120px;
 	display: inline-block;
 	color: #000000 ;	
 	font-size: 1.1em; 	
@@ -1654,7 +1662,7 @@ font-family: Helvetica, Arial, sans-serif;
 	width: 60px;
 }
 #limittable td { 
-	min-width: 40px;
+	min-width: 50px;
 }
 #limitbase {
 	margin: 10px auto;
@@ -1667,8 +1675,18 @@ font-family: Helvetica, Arial, sans-serif;
 	background-color: #f2f2f2 ;	
 	font-size: 1.1em;
 	text-align: center;
-font-family: Helvetica, Arial, sans-serif; 		
-	
+	width:120px;
+font-family: Helvetica, Arial, sans-serif; 			
+}
+
+#ownarctable tr:nth-child(4) td:nth-child(-n+2) {
+	background:white;
+	border-left: hidden;
+	border-bottom: hidden;
+}
+
+#ownarctable tr:nth-child(4) td:nth-child(3) {
+	border-top: solid 2px;
 }
 #members , #ownscore , #foreignscore
 {	
