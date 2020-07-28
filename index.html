@@ -625,8 +625,13 @@ $(document).ready(function(){
   $('#LGList').change(()=>{saveLGList()});
   $('#externaltable').change(()=>{
 		$('.usedForCalculation').data('Externals', [$('#external1').val(),$('#external2').val(),$('#external3').val(),$('#external4').val(),$('#external5').val()]);
-		saveLGList()});
-	
+		saveLGList()
+	});
+		
+	$('#p1factor, #p2factor, #p3factor, #p4factor, #p5factor').change(()=>{
+		$('.usedForCalculation').data('Factors', [$('#p1factor').val(),$('#p2factor').val(),$('#p3factor').val(),$('#p4factor').val(),$('#p5factor').val()]);
+		saveLGList()
+	});
 });
 
 //Coockie
@@ -642,6 +647,7 @@ function initLGList() {
 			tempListItem.find('.LGListItemName option:contains("'+ i.LG +'")').prop('selected', true);
 			tempListItem.find('.LGListItemLevel').val(i.Level);
 			tempListItem.data('Externals', i.External);
+			tempListItem.data('Factors', i.Factor);
 			if(i.Active){
 				tempListItem.addClass('usedForCalculation');
 			}
@@ -679,6 +685,13 @@ function initLGList() {
 			$('#external3').val(listItem.data('Externals')[2]);
 			$('#external4').val(listItem.data('Externals')[3]);
 			$('#external5').val(listItem.data('Externals')[4]);
+
+			// Set calculation factors based on the saved values for the LG
+			$('#p1factor').val(listItem.data('Factors')[0]); 
+			$('#p2factor').val(listItem.data('Factors')[1]);
+			$('#p3factor').val(listItem.data('Factors')[2]);
+			$('#p4factor').val(listItem.data('Factors')[3]);
+			$('#p5factor').val(listItem.data('Factors')[4]);
 			
 			saveLGList();
 			recalc();
@@ -697,9 +710,10 @@ function saveLGList() {
 		let LGName = $( this ).find('.LGListItemName option:selected').prop('innerText'); 
 		let LGLevel = $( this ).find('.LGListItemLevel').val();
 		let LGActive = $( this ).hasClass('usedForCalculation');
-		let LGExternal = $( this ).data('Externals');
+		let LGExternal = $( this ).data('Externals')
+		let LGFactors = $( this ).data('Factors');;
 		
-		tempLGList.push({LG:LGName,Level:LGLevel,Active:LGActive,External:LGExternal});
+		tempLGList.push({LG:LGName,Level:LGLevel,Active:LGActive,External:LGExternal,Factor:LGFactors});
 	})
 	writeCookie(tempLGList);
 	recalc();
@@ -710,9 +724,9 @@ function saveLGList() {
 function addLGToList() {
 	var LGList = readCookie();
 	if(LGList !== null){
-		LGList.push({LG:"Arche",Level:1,Active:false,External:[0,0,0,0,0]});
+		LGList.push({LG:"Arche",Level:1,Active:false,External:[0,0,0,0,0],Factor:[1.9,1.9,1.9,1.9,1.9]});
 	} else {
-		LGList = [{LG:"Arche",Level:1,Active:true,External:[0,0,0,0,0]}];
+		LGList = [{LG:"Arche",Level:1,Active:true,External:[0,0,0,0,0],Factor:[1.9,1.9,1.9,1.9,1.9]}];
 	}
 	
 	writeCookie(LGList);
@@ -1038,23 +1052,23 @@ function init()
 		}
 		if(localStorage.getItem("storedpfactor0") !== null)
 		{			
-			document.getElementById("p1factor").value = parseFloat(localStorage.storedpfactor0);
+			//document.getElementById("p1factor").value = parseFloat(localStorage.storedpfactor0);
 		}
 		if(localStorage.getItem("storedpfactor1") !== null)
 		{			
-			document.getElementById("p2factor").value = parseFloat(localStorage.storedpfactor1);
+			//document.getElementById("p2factor").value = parseFloat(localStorage.storedpfactor1);
 		}
 		if(localStorage.getItem("storedpfactor2") !== null)
 		{			
-			document.getElementById("p3factor").value = parseFloat(localStorage.storedpfactor2);
+			//document.getElementById("p3factor").value = parseFloat(localStorage.storedpfactor2);
 		}
 		if(localStorage.getItem("storedpfactor3") !== null)
 		{			
-			document.getElementById("p4factor").value = parseFloat(localStorage.storedpfactor3);
+			//document.getElementById("p4factor").value = parseFloat(localStorage.storedpfactor3);
 		}
 		if(localStorage.getItem("storedpfactor4") !== null)
 		{			
-			document.getElementById("p5factor").value = parseFloat(localStorage.storedpfactor4);
+			//document.getElementById("p5factor").value = parseFloat(localStorage.storedpfactor4);
 		}
 		if(localStorage.getItem("storedlevel") !== null)
 		{			
