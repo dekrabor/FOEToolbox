@@ -663,6 +663,8 @@ function initLGList() {
 			let itemLevel = $(this).prev().val();
 			itemLevel++
 			$(this).prev().val(itemLevel);
+			$('#external1, #external2, #external3, #external4, #external5').val('0');
+			$('.usedForCalculation').data('Externals', [0,0,0,0,0]);
 			saveLGList();
 		});
 		
@@ -671,6 +673,8 @@ function initLGList() {
 			let itemLevel = $(this).prev().prev().val();
 			itemLevel--;
 			$(this).prev().prev().val(itemLevel);
+			$('#external1, #external2, #external3, #external4, #external5').val('0');
+			$('.usedForCalculation').data('Externals', [0,0,0,0,0]);
 			saveLGList();
 		});
 		 
