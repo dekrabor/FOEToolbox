@@ -1,0 +1,286 @@
+<h1>
+    Grenzwert
+</h1>
+<div>Zeigt an ab welcher FP Summe die jeweilige Archenstufe in Relation zum Basiswert (z.B 1,9) </br> <b>immer</b> 1, 2,
+    3... FP zusätzlichen Gewinn bietet (auch vorher möglich aufgrund von Rundungen)</div>
+
+<div>
+    Basis <input step="0.01" min="1" max="3" value="1.9" id="limitbase" type="number"> </br>
+    Arche <input min="81" max="999" value="81" id="limitarc" type="number">
+</div>
+
+<table id="limittable">
+    <tbody>
+        <tr>
+            <th>
+                Faktor
+            </th>
+            <th>
+                +1
+            </th>
+            <th>
+                +2
+            </th>
+            <th>
+                +3
+            </th>
+            <th>
+                +4
+            </th>
+            <th>
+                +5
+            </th>
+            <th>
+                +6
+            </th>
+            <th>
+                +7
+            </th>
+        </tr>
+
+        <tr>
+            <td>
+                1
+            </td>
+            <td>
+                <div id="limitvalue1"></div>
+            </td>
+            <td>
+                <div id="limitvalue2"></div>
+            </td>
+            <td>
+                <div id="limitvalue3"></div>
+            </td>
+            <td>
+                <div id="limitvalue4"></div>
+            </td>
+            <td>
+                <div id="limitvalue5"></div>
+            </td>
+            <td>
+                <div id="limitvalue6"></div>
+            </td>
+            <td>
+                <div id="limitvalue7"></div>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <div id="limitvaluebase">1,9</div>
+            </td>
+            <td>
+                <div id="limitvaluebase1"></div>
+            </td>
+            <td>
+                <div id="limitvaluebase2"></div>
+            </td>
+            <td>
+                <div id="limitvaluebase3"></div>
+            </td>
+            <td>
+                <div id="limitvaluebase4"></div>
+            </td>
+            <td>
+                <div id="limitvaluebase5"></div>
+            </td>
+            <td>
+                <div id="limitvaluebase6"></div>
+            </td>
+            <td>
+                <div id="limitvaluebase7"></div>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <div id="limitvaluearc">1,9</div>
+            </td>
+            <td>
+                <div id="limitvaluearc1"></div>
+            </td>
+            <td>
+                <div id="limitvaluearc2"></div>
+            </td>
+            <td>
+                <div id="limitvaluearc3"></div>
+            </td>
+            <td>
+                <div id="limitvaluearc4"></div>
+            </td>
+            <td>
+                <div id="limitvaluearc5"></div>
+            </td>
+            <td>
+                <div id="limitvaluearc6"></div>
+            </td>
+            <td>
+                <div id="limitvaluearc7"></div>
+            </td>
+        </tr>
+    </tbody>
+</table>
+
+
+
+
+			<!--<div id="LGValues" class="outerdiv">
+		<div class="secondValue floatie">
+				<button id="secondValueSwitch" target="_self"><></button> 
+                <select type="text" id="secondValueLG">
+                    <option value="3">						Aachener Dom					</option>
+                    <option value="8">						Alcatraz					</option>
+                    <option value="13" selected="selected">						Arche					</option>
+                    <option value="14">						Arktische Orangerie					</option>
+                    <option value="15">						Atlantis Museum					</option>
+                    <option value="9">						Atomium					</option>
+                    <option value="5">						Basilius-Kathedrale					</option>
+                    <option value="15">						Blaue Galaxie					</option>
+                    <option value="16">						Burg Himeji					</option>
+                    <option value="10">						Cape Canaveral					</option>
+                    <option value="5">						Castel del Monte					</option>
+                    <option value="8">						Château Frontenac					</option>
+                    <option value="10">						Das Habitat					</option>
+                    <option value="6">						Deal Castle					</option>
+                    <option value="6">						Desdner Frauenkirche					</option>
+                    <option value="12">						Dynamischer Turm					</option>
+                    <option value="14">						Gaea-Statue					</option>
+                    <option value="3">						Hagia Sophia					</option>
+                    <option value="11">						Innovation Tower					</option>
+                    <option value="7">						Kapitol					</option>
+                    <option value="2">						Kolosseum					</option>
+                    <option value="15">						Kraken					</option>
+                    <option value="1">						Turm zu Babel					</option>
+                    <option value="2">						Leuchtturm v. Alexandria					</option>
+                    <option value="11">						Lotustempel					</option>
+                    <option value="4">						Markusdom					</option>
+                    <option value="4">						Notre Dame					</option>
+                    <option value="0">						Observatorium					</option>
+                    <option value="13">						Regenwald-Projekt					</option>
+                    <option value="0">						Relikttempel					</option>
+                    <option value="7">						Royal Albert Hall					</option>
+                    <option value="14">						Saatgut-Tresor					</option>
+                    <option value="9">						Space Needle					</option>
+                    <option value="16">						Terrakotta-Armee					</option>
+                    <option value="12">						Voyager V1					</option>
+                    <option value="1">						Zeusstatue					</option>
+
+                </select> 
+					<label class="gbtext">Level:</label> <input min="1" max="999" value="1" id="secondValueLevel" type="number">
+					<div style="display: none;">
+						<input step="0.005" min="1" max="3" value="1.9" id="secp1" type="number">
+						<input step="0.005" min="1" max="3" value="1.9" id="secp2" type="number">
+						<input step="0.005" min="1" max="3" value="1.9" id="secp3" type="number">
+						<input step="0.005" min="1" max="3" value="1.9" id="secp4" type="number">
+						<input step="0.005" min="1" max="3" value="1.9" id="secp5" type="number">
+					</div>
+		</div>
+		<div class="floatie">
+			<a href="https://diefleissigen.jimdo.com/lg-rechner-die-flei%C3%9Figen-brisgard/lg-informationen/" class="class3" target="_self">LG:&nbsp;&nbsp;</a> <select type="text" id="gbselect">
+    <option value="3">
+        Aachener Dom
+    </option>
+    <option value="8">
+        Alcatraz
+    </option>
+    <option value="13" selected="selected">
+        Arche
+    </option>
+    <option value="14">
+        Arktische Orangerie
+    </option>
+    <option value="15">
+        Atlantis Museum
+    </option>
+    <option value="9">
+        Atomium
+    </option>
+    <option value="5">
+        Basilius-Kathedrale
+    </option>
+    <option value="15">
+        Blaue Galaxie
+    </option>
+    <option value="16">						Burg Himeji					</option>
+    <option value="10">
+        Cape Canaveral
+    </option>
+    <option value="5">
+        Castel del Monte
+    </option>
+    <option value="8">
+        Château Frontenac
+    </option>
+    <option value="10">
+        Das Habitat
+    </option>
+    <option value="6">
+        Deal Castle
+    </option>
+    <option value="6">
+        Desdner Frauenkirche
+    </option>
+    <option value="12">
+        Dynamischer Turm
+    </option>
+    <option value="14">
+        Gaea-Statue
+    </option>
+    <option value="3">
+        Hagia Sophia
+    </option>
+    <option value="11">
+        Innovation Tower
+    </option>
+    <option value="7">
+        Kapitol
+    </option>
+    <option value="2">
+        Kolosseum
+    </option>
+    <option value="15">
+        Kraken
+    </option>
+    <option value="1">
+        Turm zu Babel
+    </option>
+    <option value="2">
+        Leuchtturm v. Alexandria
+    </option>
+    <option value="11">
+        Lotustempel
+    </option>
+    <option value="4">
+        Markusdom
+    </option>
+    <option value="4">
+        Notre Dame
+    </option>
+    <option value="0">
+        Observatorium
+    </option>
+    <option value="13">
+        Regenwald-Projekt
+    </option>
+    <option value="0">
+        Relikttempel
+    </option>
+    <option value="7">
+        Royal Albert Hall
+    </option>
+    <option value="14">
+        Saatgut-Tresor
+    </option>
+    <option value="9">
+        Space Needle
+    </option>
+    <option value="16">						Terrakotta-Armee					</option>
+    <option value="12">
+        Voyager V1
+    </option>
+    <option value="1">
+        Zeusstatue
+    </option>
+</select> <label class="gbtext">Level:</label> <input min="1" max="999" value="1" id="gblevel" type="number"> &nbsp; <label class="totbox">FP-∑:</label> <label class="totbox" id="totalfpdisplay">70</label> &nbsp; &nbsp; &nbsp;<br>
+	
+		</div>
+	</div>
+	-->

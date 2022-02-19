@@ -301,8 +301,6 @@ body {
     white-space: nowrap;
 }
 
-body {}
-
 body, p, table, td {
     font: normal 16px/140% Helvetica, Arial, sans-serif;
     color: black;

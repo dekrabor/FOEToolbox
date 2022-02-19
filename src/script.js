@@ -17,7 +17,7 @@ $(document).ready(function () {
     });
 });
 
-//Coockie
+//Cookie
 function initLGList() {
     $('#LGList').empty();
     var LGList = readCookie();
@@ -197,8 +197,8 @@ setInterval(function () {
     }
 }, 5000);
 
-
-
+// Increase / Decrease value of LB factor in arcboosttable
+//$('#p1factor').next('.increaseFactor').click(() => { alert($(this).prev(':input').val()) });
 
 
 
