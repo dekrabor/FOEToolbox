@@ -1,0 +1,120 @@
+<h1>
+    Grenzwert
+</h1>
+<div>Zeigt an ab welcher FP Summe die jeweilige Archenstufe in Relation zum Basiswert (z.B 1,9) </br> <b>immer</b> 1, 2,
+    3... FP zusätzlichen Gewinn bietet (auch vorher möglich aufgrund von Rundungen)</div>
+
+<div>
+    Basis <input step="0.01" min="1" max="3" value="1.9" id="limitbase" type="number"> </br>
+    Arche <input min="81" max="999" value="81" id="limitarc" type="number">
+</div>
+
+<table id="limittable">
+    <tbody>
+        <tr>
+            <th>
+                Faktor
+            </th>
+            <th>
+                +1
+            </th>
+            <th>
+                +2
+            </th>
+            <th>
+                +3
+            </th>
+            <th>
+                +4
+            </th>
+            <th>
+                +5
+            </th>
+            <th>
+                +6
+            </th>
+            <th>
+                +7
+            </th>
+        </tr>
+
+        <tr>
+            <td>
+                1
+            </td>
+            <td>
+                <div id="limitvalue1"></div>
+            </td>
+            <td>
+                <div id="limitvalue2"></div>
+            </td>
+            <td>
+                <div id="limitvalue3"></div>
+            </td>
+            <td>
+                <div id="limitvalue4"></div>
+            </td>
+            <td>
+                <div id="limitvalue5"></div>
+            </td>
+            <td>
+                <div id="limitvalue6"></div>
+            </td>
+            <td>
+                <div id="limitvalue7"></div>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <div id="limitvaluebase">1,9</div>
+            </td>
+            <td>
+                <div id="limitvaluebase1"></div>
+            </td>
+            <td>
+                <div id="limitvaluebase2"></div>
+            </td>
+            <td>
+                <div id="limitvaluebase3"></div>
+            </td>
+            <td>
+                <div id="limitvaluebase4"></div>
+            </td>
+            <td>
+                <div id="limitvaluebase5"></div>
+            </td>
+            <td>
+                <div id="limitvaluebase6"></div>
+            </td>
+            <td>
+                <div id="limitvaluebase7"></div>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <div id="limitvaluearc">1,9</div>
+            </td>
+            <td>
+                <div id="limitvaluearc1"></div>
+            </td>
+            <td>
+                <div id="limitvaluearc2"></div>
+            </td>
+            <td>
+                <div id="limitvaluearc3"></div>
+            </td>
+            <td>
+                <div id="limitvaluearc4"></div>
+            </td>
+            <td>
+                <div id="limitvaluearc5"></div>
+            </td>
+            <td>
+                <div id="limitvaluearc6"></div>
+            </td>
+            <td>
+                <div id="limitvaluearc7"></div>
+            </td>
+        </tr>
+    </tbody>
+</table>
