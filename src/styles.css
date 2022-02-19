@@ -1,0 +1,392 @@
+#container {
+    margin: 0 auto;
+    width: 600px;
+
+}
+
+h1 {
+    font-size: 2em;
+    font-family: Helvetica, Arial, sans-serif;
+    width: 100%;
+
+    text-align: center;
+}
+
+h2 {
+    font-size: 1.2em;
+    font-family: Helvetica, Arial, sans-serif;
+    width: 100%;
+
+    text-align: center;
+}
+
+h3 {
+    font-size: 1.2em;
+    font-family: Helvetica, Arial, sans-serif;
+    width: 100%;
+
+    text-align: left;
+}
+
+h4 {
+    font-size: 1.8em;
+    font-family: Helvetica, Arial, sans-serif;
+    width: 100%;
+
+    text-align: center;
+}
+
+th, td {
+    border: thin solid;
+}
+
+#noscript {
+    background-color: black;
+    color: red;
+}
+
+#arcboosttable, #externaltable, #limittable, #outbidtable, #ownarctable {
+    font-size: 1.1em;
+    font-family: Helvetica, Arial, sans-serif;
+    border-collapse: collapse;
+    border-width: thin;
+    border-style: solid;
+    background-color: #f2f2f2;
+    padding-right: 1em;
+    margin-right: 1em;
+    text-align: center;
+    vertical-align: middle;
+    display: inline-table;
+}
+
+
+.gbtext {
+    display: inline-block;
+    color: #000000;
+    font-size: 1.1em;
+    font-family: Helvetica, Arial, sans-serif;
+    margin-right: 0.5em;
+    margin-left: 0.5em;
+
+}
+
+.totbox {
+    margin: 0.2em;
+    padding: 0;
+    display: inline-block;
+    color: #000000;
+    font-size: 1.1em;
+    font-family: Helvetica, Arial, sans-serif;
+
+
+}
+
+.extbox {
+    margin: 0.2em;
+    padding: 0;
+    width: 120px;
+    display: inline-block;
+    color: #000000;
+    font-size: 1.1em;
+
+}
+
+#gbselect, #gbselect2, #secondValueLG {
+
+    font-size: 1.1em;
+    font-family: Helvetica, Arial, sans-serif;
+    background-color: #f2f2f2;
+    text-align: right;
+
+}
+
+.outerdiv {
+
+    width: 100%;
+    display: inline-block;
+}
+
+#pselect {
+
+    font-size: 1.1em;
+    background-color: #f2f2f2;
+    text-align: right;
+}
+
+#limittable {
+    margin: 20px auto;
+}
+
+#limittable input {
+    width: 60px;
+}
+
+#limittable td {
+    min-width: 50px;
+}
+
+#limitbase {
+    margin: 10px auto;
+}
+
+
+
+#gblevel, #gbfactor, #copyOutput, #extfp, #outbidgbtotal, #secondValueLevel, #outbidbgfp, #outbidfp, #ownarcfactor, #ownarcfactor2, #ownarcbasefp, #limitbase, #limitarc {
+    background-color: #f2f2f2;
+    font-size: 1.1em;
+    text-align: center;
+    width: 120px;
+    font-family: Helvetica, Arial, sans-serif;
+}
+
+#copyOutput {
+    width: auto;
+}
+
+#ownarctable tr:nth-child(4) td:nth-child(-n+2) {
+    background: white;
+    border-left: hidden;
+    border-bottom: hidden;
+}
+
+#ownarctable tr:nth-child(4) td:nth-child(3) {
+    border-top: solid 2px;
+}
+
+#members, #ownscore, #foreignscore {
+    background-color: #f2f2f2;
+    font-size: 1.1em;
+    font-family: Helvetica, Arial, sans-serif;
+}
+
+#members1, #openstation {
+    background-color: #f2f2f2;
+    font-size: 1.1em;
+    font-family: Helvetica, Arial, sans-serif;
+}
+
+.cc-privacy {
+    text-align: justify;
+}
+
+.imprint {
+    text-align: justify;
+}
+
+.j-static-page {
+    text-align: justify;
+}
+
+.imprint-about {
+    text-align: justify;
+}
+
+footer {
+    width: 600px;
+    vertical-align: center;
+    font-size: 1em;
+    font-family: Helvetica, Arial, sans-serif;
+    color: #000000;
+}
+
+#p1factor, #p2factor, #p3factor, #p4factor, #p5factor, #external1, #external2, #external3, #external4, #external5 {
+    text-align: center;
+    font-size: 1em;
+    font-family: Helvetica, Arial, sans-serif;
+    vertical-align: center;
+    background-color: #f2f2f2;
+}
+
+a.class1:link {
+    font-size: 11px;
+    color: #CBE6A8;
+    text-decoration: none;
+}
+
+a.class1:visited {
+    font-size: 11px;
+    color: #CBE6A8;
+    text-decoration: none;
+}
+
+a.class1:hover {
+    color: #5da7f1;
+    font-weight: bold;
+    font-size: 11.5px;
+    text-decoration: none;
+}
+
+a.class2:link {
+    font-size: 12px;
+    color: #CBE6A8;
+    text-decoration: none;
+}
+
+a.class2:visited {
+    font-size: 12px;
+    color: #CBE6A8;
+    text-decoration: none;
+}
+
+a.class2:hover {
+    color: #5da7f1;
+    font-weight: bold;
+    font-size: 12.5px;
+    text-decoration: none;
+}
+
+a.class3:link {
+    font-size: 18px;
+    color: #CBE6A8;
+    text-decoration: none;
+}
+
+a.class3:visited {
+    font-size: 18px;
+    color: #CBE6A8;
+    text-decoration: none;
+}
+
+a.class3:hover {
+    color: #5da7f1;
+    font-weight: bold;
+    font-size: 18.5px;
+    text-decoration: none;
+}
+
+a.class4:link {
+    font-size: 1em;
+    color: #000000;
+    text-decoration: none;
+}
+
+a.class4:visited {
+    font-size: 1em;
+    color: #000000;
+    text-decoration: none;
+}
+
+a.class4:hover {
+    color: #163963;
+    font-weight: bold;
+    font-size: 1.1em;
+    text-decoration: none;
+}
+
+a.class5:link {
+    font-size: 12px;
+    color: #FE8B65;
+    text-decoration: none;
+}
+
+a.class5:visited {
+    font-size: 12px;
+    color: #FE8B65;
+    text-decoration: none;
+}
+
+a.class5:hover {
+    color: #5da7f1;
+    font-weight: bold;
+    font-size: 12.5px;
+    text-decoration: none;
+}
+
+
+body {
+    padding: 0;
+    margin: 0;
+    width: 100%;
+    height: 100%;
+    white-space: nowrap;
+}
+
+body {}
+
+body, p, table, td {
+    font: normal 16px/140% Helvetica, Arial, sans-serif;
+    color: black;
+}
+
+input, textarea {
+    font: normal 16px/140% Helvetica, Arial, sans-serif;
+}
+
+h1 {
+    font: normal normal bold 17px/140% Helvetica, Arial, sans-serif;
+    color: #000000;
+
+}
+
+h2 {
+    font: normal normal bold 11px/140% Helvetica, Arial, sans-serif;
+    color: #000000;
+    text-align: center;
+}
+
+h3 {
+    font: normal normal normal 11px/140% Helvetica, Arial, sans-serif;
+    color: #000000;
+
+}
+
+.setFactorsContainer {
+    margin: 10px auto 0 auto;
+}
+
+a:link,
+a:visited {
+    text-decoration: underline;
+    /* fix */
+    color: #000000;
+}
+
+a:active,
+a:hover {
+    text-decoration: none;
+    /* fix */
+    color: #000000;
+}
+
+button:focus {
+    outline: 0;
+}
+
+div.hr {
+    border-bottom-style: solid;
+    border-bottom-width: 1px;
+    /* fix */
+    border-color: #8a5622;
+    height: 1px;
+}
+
+.secondValue {
+    margin-bottom: 10px;
+}
+
+#LGValues {
+    position: relative;
+    margin: 0 auto;
+    width: 650px;
+}
+
+.floatie {
+    float: left;
+}
+
+.dummyItem {
+    display: none;
+}
+
+.usedForCalculation {
+    background: #15ff1587;
+}
+
+#copyOutput {
+    margin-top: 10px;
+}
+
+.active {
+    background-color: #15ff1587;
+    ;
+}
