@@ -149,7 +149,7 @@ function deleteCookie() {
     document.cookie = [name, '=; expires=Thu, 01-Jan-1970 00:00:01 GMT; path=/;'].join('');
 }
 
-// Set to 1,85, 1,93 or 1,9
+// Set to 1,94, 1,93 or 1,9
 document.getElementById("setFactors9").addEventListener("click", function () {
     document.getElementById("p1factor").value = 1.9;
     document.getElementById("p2factor").value = 1.9;
@@ -159,21 +159,21 @@ document.getElementById("setFactors9").addEventListener("click", function () {
     recalc();
 });
 
-document.getElementById("setFactors85").addEventListener("click", function () {
-    document.getElementById("p1factor").value = 1.85;
-    document.getElementById("p2factor").value = 1.85;
-    document.getElementById("p3factor").value = 1.85;
-    document.getElementById("p4factor").value = 1.85;
-    document.getElementById("p5factor").value = 1.85;
-    recalc();
-});
-
 document.getElementById("setFactors93").addEventListener("click", function () {
     document.getElementById("p1factor").value = 1.93;
     document.getElementById("p2factor").value = 1.93;
     document.getElementById("p3factor").value = 1.93;
     document.getElementById("p4factor").value = 1.93;
     document.getElementById("p5factor").value = 1.93;
+    recalc();
+});
+
+document.getElementById("setFactors94").addEventListener("click", function () {
+    document.getElementById("p1factor").value = 1.94;
+    document.getElementById("p2factor").value = 1.94;
+    document.getElementById("p3factor").value = 1.94;
+    document.getElementById("p4factor").value = 1.94;
+    document.getElementById("p5factor").value = 1.94;
     recalc();
 });
 
@@ -198,7 +198,15 @@ setInterval(function () {
 }, 5000);
 
 // Increase / Decrease value of LB factor in arcboosttable
-//$('#p1factor').next('.increaseFactor').click(() => { alert($(this).prev(':input').val()) });
+$('*:is(#p1factor, #p2factor, #p3factor, #p4factor, #p5factor) ~ .increaseFactor').click(function() { 
+    $(this).parent().find(':input').val((i, val) => { return parseFloat(val) + 0.01})
+    recalc()
+ });
+
+ $('*:is(#p1factor, #p2factor, #p3factor, #p4factor, #p5factor) ~ .decreaseFactor').click(function() { 
+    $(this).parent().find(':input').val((i, val) => { return parseFloat(val) - 0.01})
+    recalc()
+ });
 
 
 
@@ -351,6 +359,16 @@ $('#copyP1, #copyP2, #copyP3, #copyP4, #copyP5').click(function () {
     $(this).toggleClass('active');
     recalc();
 })
+$('#setcopyP345').click(function () {
+    $('#copyP1, #copyP2').removeClass('active');
+    $('#copyP3, #copyP4, #copyP5').addClass('active');
+    recalc();
+})
+$('#setcopyP12').click(function () {
+    $('#copyP1, #copyP2').addClass('active');
+    $('#copyP3, #copyP4, #copyP5').removeClass('active');
+    recalc();
+})
 $('#copyButton').click(function () {
     copyToClipboard('#copyOutput');
 })
@@ -426,18 +444,18 @@ function init() {
         if (localStorage.getItem("storedmembers1") !== null) {
             document.getElementById("members1").value = parseFloat(localStorage.storedmembers1);
         }
-        if (localStorage.getItem("limitbase") !== null) {
+        /*if (localStorage.getItem("limitbase") !== null) {
             document.getElementById("limitbase").value = localStorage.limitbase;
         }
         if (localStorage.getItem("limitarc") !== null) {
             document.getElementById("limitarc").value = localStorage.limitarc;
-        }
+        }*/
     }
 
     //Put username to copyUser
     $('#copyUsername').val(localStorage.getItem("LGCopyUsername"));
 
-    limitCalc();
+    //limitCalc();
 
     recalc();
 }
