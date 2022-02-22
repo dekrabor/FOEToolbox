@@ -200,12 +200,14 @@ setInterval(function () {
 // Increase / Decrease value of LB factor in arcboosttable
 $('*:is(#p1factor, #p2factor, #p3factor, #p4factor, #p5factor) ~ .increaseFactor').click(function() { 
     $(this).parent().find(':input').val((i, val) => { return parseFloat(val) + 0.01})
-    recalc()
+    saveLGList();
+    recalc();
  });
 
  $('*:is(#p1factor, #p2factor, #p3factor, #p4factor, #p5factor) ~ .decreaseFactor').click(function() { 
     $(this).parent().find(':input').val((i, val) => { return parseFloat(val) - 0.01})
-    recalc()
+    saveLGList();
+    recalc();
  });
 
 
