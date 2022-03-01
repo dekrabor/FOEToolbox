@@ -230,7 +230,7 @@ $('*:is(#p1factor, #p2factor, #p3factor, #p4factor, #p5factor) ~ .increaseFactor
 
 
 
-()
+
 
 
 
