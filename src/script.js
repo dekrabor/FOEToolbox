@@ -1,152 +1,214 @@
-// Custom changes. 
-$(document).ready(function () {
-    initLGList();
+// Custom changes.
+let worldData = readWorldData();
 
-    //Add new LG
-    $('#addLGToList').click(() => { addLGToList() });
-    $('#removeLGfromList').click(() => { removeLGfromList() });
-    $('#LGList').change(() => { saveLGList() });
+$(document).ready(function () {
+    initWorlds();
+
+    $(document).on('click', '.addWorld', function () {
+        const newWorld = prompt('Welt Name?');
+        if (!newWorld) return;
+        if (!worldData.worlds[newWorld]) {
+            worldData.worlds[newWorld] = null;
+            writeWorldData(worldData);
+            initWorlds();
+        }
+    });
+
     $('#externaltable').change(() => {
         $('.usedForCalculation').data('Externals', [$('#external1').val(), $('#external2').val(), $('#external3').val(), $('#external4').val(), $('#external5').val()]);
-        saveLGList()
+        const world = $('.usedForCalculation').closest('.worldBlock').data('world');
+        if (world) saveLGList(world);
     });
 
     $('#p1factor, #p2factor, #p3factor, #p4factor, #p5factor').change(() => {
         $('.usedForCalculation').data('Factors', [$('#p1factor').val(), $('#p2factor').val(), $('#p3factor').val(), $('#p4factor').val(), $('#p5factor').val()]);
-        saveLGList()
+        const world = $('.usedForCalculation').closest('.worldBlock').data('world');
+        if (world) saveLGList(world);
     });
 });
 
-//Cookie
-function initLGList() {
-    $('#LGList').empty();
-    var LGList = readCookie();
-
-    if (LGList !== null) {
-        for (let i of LGList) {
-            let tempListItem = $('.LGListItem.dummyItem').clone();
-            tempListItem.removeClass('dummyItem');
-
-            tempListItem.find('.LGListItemName option:contains("' + i.LG + '")').prop('selected', true);
-            tempListItem.find('.LGListItemLevel').val(i.Level);
-            tempListItem.data('Externals', i.External);
-            tempListItem.data('Factors', i.Factor);
-            if (i.Active) {
-                tempListItem.addClass('usedForCalculation');
-            }
-
-            tempListItem.appendTo('#LGList');
+// Build world blocks
+function initWorlds() {
+    const container = $('#worldsContainer');
+    container.empty();
+    Object.keys(worldData.worlds).forEach((world, idx) => {
+        const block = $('<div class="worldBlock"></div>').attr('data-world', world);
+        const header = $('<h3></h3>').text(world);
+        const removeBtn = $('<button class="removeWorld">-</button>');
+        header.append(' ').append(removeBtn);
+        if (idx === 0) {
+            const addWorldBtn = $('<button class="addWorld">+</button>');
+            header.append(' ').append(addWorldBtn);
         }
-        recalc();
+        block.append(header);
+        const list = $('<div class="LGList"></div>');
+        block.append(list);
+        const addBtn = $('<button class="addLGToList">+</button>');
+        const remBtn = $('<button class="removeLGfromList">-</button>');
+        block.append(addBtn).append(remBtn);
+        container.append(block);
 
-        //Increase level - Event listener
-        $('.LGListItemPlus').click(function () {
-            let itemLevel = $(this).prev().val();
-            itemLevel++
-            $(this).prev().val(itemLevel);
-            $('#external1, #external2, #external3, #external4, #external5').val('0');
-            $('.usedForCalculation').data('Externals', [0, 0, 0, 0, 0]);
-            saveLGList();
+        initLGList(world, list);
+
+        removeBtn.click(function () {
+            if (Object.keys(worldData.worlds).length <= 1) return;
+            deleteCookie(world);
+            initWorlds();
         });
 
-        //Decrease level - Event listener
-        $('.LGListItemMinus').click(function () {
-            let itemLevel = $(this).prev().prev().val();
-            itemLevel--;
-            $(this).prev().prev().val(itemLevel);
-            $('#external1, #external2, #external3, #external4, #external5').val('0');
-            $('.usedForCalculation').data('Externals', [0, 0, 0, 0, 0]);
-            saveLGList();
+        addBtn.click(function () {
+            addLGToList(world);
         });
 
-        //Activate LG - Event listener
-        $('.LGListItemActive').click(function () {
-            $('.usedForCalculation').removeClass('usedForCalculation');
-
-            let listItem = $(this).parent();
-            listItem.addClass('usedForCalculation');
-
-            // Set the external players based on the saved values for the LG
-            $('#external1').val(listItem.data('Externals')[0]);
-            $('#external2').val(listItem.data('Externals')[1]);
-            $('#external3').val(listItem.data('Externals')[2]);
-            $('#external4').val(listItem.data('Externals')[3]);
-            $('#external5').val(listItem.data('Externals')[4]);
-
-            // Set calculation factors based on the saved values for the LG
-            $('#p1factor').val(listItem.data('Factors')[0]);
-            $('#p2factor').val(listItem.data('Factors')[1]);
-            $('#p3factor').val(listItem.data('Factors')[2]);
-            $('#p4factor').val(listItem.data('Factors')[3]);
-            $('#p5factor').val(listItem.data('Factors')[4]);
-
-            saveLGList();
-            recalc();
+        remBtn.click(function () {
+            removeLGfromList(world);
         });
+    });
 
-    } else {
-        //Create an LG list
-        addLGToList();
+    const firstActive = $('.usedForCalculation').first();
+    $('.usedForCalculation').not(firstActive).removeClass('usedForCalculation');
+    Object.keys(worldData.worlds).forEach(w => saveLGList(w));
+}
+
+//Cookie
+function initLGList(world, listContainer) {
+    listContainer.empty();
+    var LGList = readCookie(world);
+
+    if (LGList === null) {
+        LGList = [{ LG: "Arche", Level: 1, Active: true, External: [0, 0, 0, 0, 0], Factor: [1.9, 1.9, 1.9, 1.9, 1.9] }];
+        writeCookie(world, LGList);
     }
+
+    for (let i of LGList) {
+        let tempListItem = $('.LGListItem.dummyItem').clone();
+        tempListItem.removeClass('dummyItem');
+
+        tempListItem.find('.LGListItemName option:contains("' + i.LG + '")').prop('selected', true);
+        tempListItem.find('.LGListItemLevel').val(i.Level);
+        tempListItem.data('Externals', i.External);
+        tempListItem.data('Factors', i.Factor);
+        if (i.Active) {
+            tempListItem.addClass('usedForCalculation');
+        }
+
+        tempListItem.appendTo(listContainer);
+    }
+    recalc();
+
+    //Increase level - Event listener
+    listContainer.find('.LGListItemPlus').click(function () {
+        let itemLevel = $(this).prev().val();
+        itemLevel++;
+        $(this).prev().val(itemLevel);
+        $('#external1, #external2, #external3, #external4, #external5').val('0');
+        $('.usedForCalculation').data('Externals', [0, 0, 0, 0, 0]);
+        saveLGList(world);
+    });
+
+    //Decrease level - Event listener
+    listContainer.find('.LGListItemMinus').click(function () {
+        let itemLevel = $(this).prev().prev().val();
+        itemLevel--;
+        $(this).prev().prev().val(itemLevel);
+        $('#external1, #external2, #external3, #external4, #external5').val('0');
+        $('.usedForCalculation').data('Externals', [0, 0, 0, 0, 0]);
+        saveLGList(world);
+    });
+
+    //Activate LG - Event listener
+    listContainer.find('.LGListItemActive').click(function () {
+        $('.usedForCalculation').removeClass('usedForCalculation');
+
+        let listItem = $(this).parent();
+        listItem.addClass('usedForCalculation');
+
+        // Set the external players based on the saved values for the LG
+        $('#external1').val(listItem.data('Externals')[0]);
+        $('#external2').val(listItem.data('Externals')[1]);
+        $('#external3').val(listItem.data('Externals')[2]);
+        $('#external4').val(listItem.data('Externals')[3]);
+        $('#external5').val(listItem.data('Externals')[4]);
+
+        // Set calculation factors based on the saved values for the LG
+        $('#p1factor').val(listItem.data('Factors')[0]);
+        $('#p2factor').val(listItem.data('Factors')[1]);
+        $('#p3factor').val(listItem.data('Factors')[2]);
+        $('#p4factor').val(listItem.data('Factors')[3]);
+        $('#p5factor').val(listItem.data('Factors')[4]);
+
+        Object.keys(worldData.worlds).forEach(w => saveLGList(w));
+        recalc();
+    });
+
+    listContainer.change(() => { saveLGList(world); });
 }
 
 // Save current state of the LG list to a cookie
-function saveLGList() {
+function saveLGList(world) {
     let tempLGList = [];
-    $('#LGList div').each(function () {
+    $(`.worldBlock[data-world="${world}"] .LGList .LGListItem`).each(function () {
         let LGName = $(this).find('.LGListItemName option:selected').prop('innerText');
         let LGLevel = $(this).find('.LGListItemLevel').val();
         let LGActive = $(this).hasClass('usedForCalculation');
-        let LGExternal = $(this).data('Externals')
-        let LGFactors = $(this).data('Factors');;
+        let LGExternal = $(this).data('Externals');
+        let LGFactors = $(this).data('Factors');
 
         tempLGList.push({ LG: LGName, Level: LGLevel, Active: LGActive, External: LGExternal, Factor: LGFactors });
-    })
-    writeCookie(tempLGList);
+    });
+    writeCookie(world, tempLGList);
     recalc();
 }
 
 
 //Add / remove new line
-function addLGToList() {
-    var LGList = readCookie();
+function addLGToList(world) {
+    var LGList = readCookie(world);
     if (LGList !== null) {
         LGList.push({ LG: "Arche", Level: 1, Active: false, External: [0, 0, 0, 0, 0], Factor: [1.9, 1.9, 1.9, 1.9, 1.9] });
     } else {
         LGList = [{ LG: "Arche", Level: 1, Active: true, External: [0, 0, 0, 0, 0], Factor: [1.9, 1.9, 1.9, 1.9, 1.9] }];
     }
 
-    writeCookie(LGList);
-    initLGList();
+    writeCookie(world, LGList);
+    initWorlds();
 }
 
-function removeLGfromList() {
-    var LGList = readCookie();
+function removeLGfromList(world) {
+    var LGList = readCookie(world);
+    if (!LGList || LGList.length === 0) return;
 
     LGList.pop();
 
-    writeCookie(LGList);
-    initLGList();
+    writeCookie(world, LGList);
+    initWorlds();
 }
 
 //Save/Read/Delete Cookie
-function writeCookie(value) {
-    var name = "LGListStorage";
-    var cookie = JSON.stringify(value);
-    localStorage.setItem(name, cookie);
+function writeCookie(world, value) {
+    worldData.worlds[world] = value;
+    writeWorldData(worldData);
 }
 
-function readCookie() {
-    var name = "LGListStorage";
-    var value = localStorage.getItem(name);
-    var result = JSON.parse(value);
-    return result;
-
+function readCookie(world) {
+    return worldData.worlds[world];
 }
 
-function deleteCookie() {
-    var name = "LGListStorage";
-    document.cookie = [name, '=; expires=Thu, 01-Jan-1970 00:00:01 GMT; path=/;'].join('');
+function deleteCookie(world) {
+    delete worldData.worlds[world];
+    writeWorldData(worldData);
+}
+
+function readWorldData() {
+    let value = localStorage.getItem('LGWorldData');
+    if (!value) {
+        return { worlds: { 'Standard': null } };
+    }
+    return JSON.parse(value);
+}
+
+function writeWorldData(data) {
+    localStorage.setItem('LGWorldData', JSON.stringify(data));
 }
 
 // Set to 1,94, 1,93 or 1,9
@@ -198,19 +260,21 @@ setInterval(function () {
 }, 5000);
 
 // Increase / Decrease value of LB factor in arcboosttable
-$('*:is(#p1factor, #p2factor, #p3factor, #p4factor, #p5factor) ~ .increaseFactor').click(function() { 
+$('*:is(#p1factor, #p2factor, #p3factor, #p4factor, #p5factor) ~ .increaseFactor').click(function() {
     $(this).parent().find(':input').val((i, val) => { return parseFloat(val) + 0.01})
-    $('.usedForCalculation').data('Factors', [$('#p1factor').val(), $('#p2factor').val(), $('#p3factor').val(), $('#p4factor').val(), $('#p5factor').val()]);  
-    saveLGList();
-    recalc();
- });
-
- $('*:is(#p1factor, #p2factor, #p3factor, #p4factor, #p5factor) ~ .decreaseFactor').click(function() { 
-    $(this).parent().find(':input').val((i, val) => { return parseFloat(val) - 0.01})  
     $('.usedForCalculation').data('Factors', [$('#p1factor').val(), $('#p2factor').val(), $('#p3factor').val(), $('#p4factor').val(), $('#p5factor').val()]);
-    saveLGList();
+    const world = $('.usedForCalculation').closest('.worldBlock').data('world');
+    if (world) saveLGList(world);
     recalc();
- });
+});
+
+$('*:is(#p1factor, #p2factor, #p3factor, #p4factor, #p5factor) ~ .decreaseFactor').click(function() {
+    $(this).parent().find(':input').val((i, val) => { return parseFloat(val) - 0.01})
+    $('.usedForCalculation').data('Factors', [$('#p1factor').val(), $('#p2factor').val(), $('#p3factor').val(), $('#p4factor').val(), $('#p5factor').val()]);
+    const world = $('.usedForCalculation').closest('.worldBlock').data('world');
+    if (world) saveLGList(world);
+    recalc();
+});
 
 
 

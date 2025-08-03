@@ -1,7 +1,31 @@
 #container {
     margin: 0 auto;
-    width: 600px;
+    width: 100%;
+    max-width: 600px;
 
+}
+
+#worldsContainer {
+    margin: 0 auto;
+    width: 100%;
+    max-width: 600px;
+}
+
+.worldBlock {
+    padding: 0.25em;
+    margin: 0.25em 0;
+}
+
+.worldBlock h3 {
+    margin: 0 0 0.2em 0;
+    font-size: 1.1em;
+    font-weight: bold;;
+    display: flex;
+    align-items: center;
+}
+
+.worldBlock h3 button {
+    margin-left: 0.2em;
 }
 
 h1 {
