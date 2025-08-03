@@ -1,19 +1,32 @@
 #container {
     margin: 0 auto;
-    width: 600px;
+    width: 100%;
+    max-width: 600px;
 
 }
 
 #worldsContainer {
     margin: 0 auto;
-    width: 600px;
+    width: 100%;
+    max-width: 600px;
 }
 
 .worldBlock {
-    border: thin solid;
+    border: thin solid #ccc;
     background-color: #f2f2f2;
-    padding: 0.5em;
-    margin: 0.5em 0;
+    padding: 0.25em;
+    margin: 0.25em 0;
+}
+
+.worldBlock h3 {
+    margin: 0 0 0.2em 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.worldBlock h3 button {
+    margin-left: 0.2em;
 }
 
 h1 {

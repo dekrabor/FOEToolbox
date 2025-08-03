@@ -4,7 +4,7 @@ let worldData = readWorldData();
 $(document).ready(function () {
     initWorlds();
 
-    $('#addWorld').click(function () {
+    $(document).on('click', '.addWorld', function () {
         const newWorld = prompt('Welt Name?');
         if (!newWorld) return;
         if (!worldData.worlds[newWorld]) {
@@ -31,11 +31,15 @@ $(document).ready(function () {
 function initWorlds() {
     const container = $('#worldsContainer');
     container.empty();
-    Object.keys(worldData.worlds).forEach(world => {
+    Object.keys(worldData.worlds).forEach((world, idx) => {
         const block = $('<div class="worldBlock"></div>').attr('data-world', world);
         const header = $('<h3></h3>').text(world);
         const removeBtn = $('<button class="removeWorld">-</button>');
         header.append(' ').append(removeBtn);
+        if (idx === 0) {
+            const addWorldBtn = $('<button class="addWorld">+</button>');
+            header.append(' ').append(addWorldBtn);
+        }
         block.append(header);
         const list = $('<div class="LGList"></div>');
         block.append(list);
@@ -60,6 +64,10 @@ function initWorlds() {
             removeLGfromList(world);
         });
     });
+
+    const firstActive = $('.usedForCalculation').first();
+    $('.usedForCalculation').not(firstActive).removeClass('usedForCalculation');
+    Object.keys(worldData.worlds).forEach(w => saveLGList(w));
 }
 
 //Cookie
@@ -129,7 +137,7 @@ function initLGList(world, listContainer) {
         $('#p4factor').val(listItem.data('Factors')[3]);
         $('#p5factor').val(listItem.data('Factors')[4]);
 
-        saveLGList(world);
+        Object.keys(worldData.worlds).forEach(w => saveLGList(w));
         recalc();
     });
 
