@@ -41,11 +41,12 @@ function initWorlds() {
             header.append(' ').append(addWorldBtn);
         }
         block.append(header);
+        const listContainer = $('<div class="LGListContainer"></div>');
         const list = $('<div class="LGList"></div>');
-        block.append(list);
         const addBtn = $('<button class="addLGToList">+</button>');
         const remBtn = $('<button class="removeLGfromList">-</button>');
-        block.append(addBtn).append(remBtn);
+        listContainer.append(list).append(addBtn).append(remBtn);
+        block.append(listContainer);
         container.append(block);
 
         initLGList(world, list);
