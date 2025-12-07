@@ -59,6 +59,10 @@ function initWorlds() {
             collapseBtn.attr('aria-expanded', !isCollapsed);
         });
 
+        heading.click(function () {
+            collapseBtn.trigger('click');
+        });
+
         removeBtn.click(function () {
             if (Object.keys(worldData.worlds).length <= 1) return;
             deleteCookie(world);
