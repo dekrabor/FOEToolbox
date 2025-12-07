@@ -33,12 +33,14 @@ function initWorlds() {
     container.empty();
     Object.keys(worldData.worlds).forEach((world, idx) => {
         const block = $('<div class="worldBlock"></div>').attr('data-world', world);
-        const header = $('<h3></h3>').text(world);
+        const header = $('<div class="worldHeader"></div>');
+        const collapseBtn = $('<button class="toggleWorld" aria-expanded="true" title="Welt ein-/ausblenden">▼</button>');
+        const heading = $('<h3></h3>').text(world);
         const removeBtn = $('<button class="removeWorld">-</button>');
-        header.append(' ').append(removeBtn);
+        header.append(collapseBtn).append(heading).append(removeBtn);
         if (idx === 0) {
             const addWorldBtn = $('<button class="addWorld">+</button>');
-            header.append(' ').append(addWorldBtn);
+            header.append(addWorldBtn);
         }
         block.append(header);
         const listContainer = $('<div class="LGListContainer"></div>');
@@ -50,6 +52,12 @@ function initWorlds() {
         container.append(block);
 
         initLGList(world, list);
+
+        collapseBtn.click(function () {
+            const isCollapsed = block.toggleClass('collapsed').hasClass('collapsed');
+            collapseBtn.text(isCollapsed ? '▶' : '▼');
+            collapseBtn.attr('aria-expanded', !isCollapsed);
+        });
 
         removeBtn.click(function () {
             if (Object.keys(worldData.worlds).length <= 1) return;

@@ -15,16 +15,33 @@
     padding: 0.25em;
     margin: 0.25em 0;
     display: flex;
+    flex-direction: column;
+    gap: 0.25em;
+}
+
+.worldHeader {
+    display: flex;
+    align-items: center;
+    gap: 0.35em;
 }
 
 .worldBlock h3 {
-    margin: 0 0 0.2em 0;
+    margin: 0;
     font-size: 1.1em;
     font-weight: bold;;
+    flex: 1;
 }
 
 .worldBlock h3 button {
     margin-left: 0.2em;
+}
+
+.toggleWorld {
+    width: 2em;
+}
+
+.worldBlock.collapsed .LGListContainer {
+    display: none;
 }
 
 h1 {
