@@ -9,6 +9,7 @@ $(document).ready(function () {
         if (!newWorld) return;
         if (!worldData.worlds[newWorld]) {
             worldData.worlds[newWorld] = null;
+            worldData.collapsedWorlds[newWorld] = false;
             writeWorldData(worldData);
             initWorlds();
         }
@@ -59,6 +60,11 @@ function initWorlds() {
             collapseBtn.attr('aria-expanded', !isCollapsed);
         });
 
+        collapseBtn.on('click', function () {
+            worldData.collapsedWorlds[world] = block.hasClass('collapsed');
+            writeWorldData(worldData);
+        });
+
         heading.click(function () {
             collapseBtn.trigger('click');
         });
@@ -76,6 +82,10 @@ function initWorlds() {
         remBtn.click(function () {
             removeLGfromList(world);
         });
+
+        if (worldData.collapsedWorlds[world]) {
+            collapseBtn.trigger('click');
+        }
     });
 
     const firstActive = $('.usedForCalculation').first();
@@ -209,15 +219,25 @@ function readCookie(world) {
 
 function deleteCookie(world) {
     delete worldData.worlds[world];
+    if (worldData.collapsedWorlds) {
+        delete worldData.collapsedWorlds[world];
+    }
     writeWorldData(worldData);
 }
 
 function readWorldData() {
     let value = localStorage.getItem('LGWorldData');
-    if (!value) {
-        return { worlds: { 'Standard': null } };
+    let data = { worlds: { 'Standard': null }, collapsedWorlds: {} };
+    if (value) {
+        try {
+            data = JSON.parse(value);
+        } catch (err) {
+            data = { worlds: { 'Standard': null }, collapsedWorlds: {} };
+        }
     }
-    return JSON.parse(value);
+    data.worlds = data.worlds || { 'Standard': null };
+    data.collapsedWorlds = data.collapsedWorlds || {};
+    return data;
 }
 
 function writeWorldData(data) {
