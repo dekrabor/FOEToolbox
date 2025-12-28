@@ -4,17 +4,25 @@ This repo contains the React + Vite rewrite of the FOE toolbox.
 
 ## Getting started
 
-1. Clear any forced proxy environment variables so `npm` can talk directly to the public registry:
-   ```bash
-   unset http_proxy https_proxy HTTP_PROXY HTTPS_PROXY npm_config_http_proxy npm_config_https_proxy YARN_HTTP_PROXY YARN_HTTPS_PROXY
-   ```
-2. Install dependencies using the helper script that applies the same proxy-safe environment:
+The repo includes two install helpers so you can choose whether to keep or clear the proxy variables baked into this environment:
+
+* `npm run deps` will try your active proxy settings first, then automatically retry with all proxy variables removed to rule out an intercept issue.
+* `npm run deps:proxy` keeps `http_proxy/https_proxy` (recommended when you have authenticated egress).
+* `npm run deps:direct` strips all proxy variables (recommended when the proxy returns 403/ENETUNREACH).
+
+Typical flow:
+
+1. Install dependencies
    ```bash
    npm run deps
    ```
-3. Start the dev server:
+   If you see `403 Forbidden` from the registry, rerun with explicit proxy control:
+   ```bash
+   npm run deps:proxy   # keep proxy if your org requires it
+   npm run deps:direct  # bypass proxy if it's blocking the registry
+   ```
+   Check the freshest log in `~/.npm/_logs` for the upstream error text (e.g., auth-required 407 vs. registry 403).
+2. Start the dev server:
    ```bash
    npm run dev
    ```
-
-If your network still blocks the registry, check the latest log in `~/.npm/_logs` for the exact upstream error.
